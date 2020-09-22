@@ -586,7 +586,7 @@
           "readOnly": true,
           "description": "List of references to FirewallPolicyRuleCollectionGroups.",
           "items": {
-            "$ref": "./network.json#/definitions/SubResource"
+            "$ref": "./network.json#/definitions/FirewallPolicyRuleCollectionGroup"
           }
         },
         "provisioningState": {
@@ -863,6 +863,9 @@
           "description": "Terminate TLS connections for this rule."
         }
       },
+      "required": [
+        "sourceAddresses", "destinationAddresses", "protocols", "targetFqdns", "targetUrls", "fqdnTags", "sourceIpGroups", "terminateTLS"
+      ],
       "description": "Rule of type application."
     },
     "NatRule": {
@@ -917,7 +920,10 @@
             "type": "string"
           }
         }
-      }
+      },
+      "required": [
+        "ipProtocols", "sourceAddresses", "destinationAddresses", "destinationPorts", "translatedAddress", "translatedPort", "sourceIpGroups"
+      ]
     },
     "NetworkRule": {
       "description": "Rule of type network.",
@@ -977,7 +983,10 @@
             "type": "string"
           }
         }
-      }
+      },
+      "required": [
+        "ipProtocols", "sourceAddresses", "destinationAddresses", "destinationPorts", "sourceIpGroups", "destinationIpGroups", "destinationFqdns"
+      ]
     },
     "FirewallPolicyRuleApplicationProtocol": {
       "properties": {
@@ -1149,7 +1158,11 @@
           "$ref": "#/definitions/FirewallPolicyIntrusionDetectionConfiguration",
           "description": "Intrusion detection configuration properties."
         }
-      }
+      },
+      "required": [
+        "mode",
+        "configuration"
+      ]
     },
     "FirewallPolicyIntrusionDetectionStateOptions": {
       "type": "string",
@@ -1247,6 +1260,9 @@
           }
         }
       },
+      "required": [
+        "name", "description", "protocol", "sourceAddresses", "destinationAddresses", "destinationPorts", "sourceIpGroups", "destinationIpGroups"
+      ],
       "description": "Intrusion detection bypass traffic specification."
     },
     "FirewallPolicyIntrusionDetectionBypassTrafficProtocol": {
@@ -1270,6 +1286,9 @@
           "description": "The CA used for intermediate CA generation."
         }
       },
+      "required": [
+        "certificateAuthority"
+      ],
       "description": "Configuration needed to perform TLS termination & initiation."
     },
     "FirewallPolicyCertificateAuthority": {
@@ -1283,6 +1302,9 @@
           "description": "Name of the CA certificate."
         }
       },
+      "required": [
+        "keyVaultSecretId", "name"
+      ],
       "description": "Trusted Root certificates properties for tls."
     }
   }

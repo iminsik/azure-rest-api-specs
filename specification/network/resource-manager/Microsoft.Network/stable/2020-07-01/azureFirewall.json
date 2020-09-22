@@ -477,6 +477,9 @@
           "description": "The number of Public IP addresses associated with azure firewall."
         }
       },
+      "required": [
+        "addresses", "count"
+      ],
       "description": "Public IP addresses associated with azure firewall."
     },
     "HubIPAddresses": {
@@ -568,6 +571,9 @@
           "description": "The additional properties used to further config this azure firewall."
         }
       },
+      "required": [
+        "sku"
+      ],
       "description": "Properties of the Azure Firewall."
     },
     "AzureFirewall": {
@@ -1079,6 +1085,9 @@
           }
         }
       },
+      "required": [
+        "name", "tier"
+      ],
       "description": "SKU of an Azure Firewall."
     }
   }

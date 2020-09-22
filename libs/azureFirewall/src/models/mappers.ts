@@ -131,6 +131,7 @@ export const HubPublicIPAddresses: msRest.CompositeMapper = {
     className: "HubPublicIPAddresses",
     modelProperties: {
       addresses: {
+        required: true,
         serializedName: "addresses",
         type: {
           name: "Sequence",
@@ -143,6 +144,7 @@ export const HubPublicIPAddresses: msRest.CompositeMapper = {
         }
       },
       count: {
+        required: true,
         serializedName: "count",
         type: {
           name: "Number"
@@ -692,12 +694,14 @@ export const AzureFirewallSku: msRest.CompositeMapper = {
     className: "AzureFirewallSku",
     modelProperties: {
       name: {
+        required: true,
         serializedName: "name",
         type: {
           name: "String"
         }
       },
       tier: {
+        required: true,
         serializedName: "tier",
         type: {
           name: "String"
@@ -864,6 +868,7 @@ export const AzureFirewall: msRest.CompositeMapper = {
         }
       },
       sku: {
+        required: true,
         serializedName: "properties.sku",
         type: {
           name: "Composite",

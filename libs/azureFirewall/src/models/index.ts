@@ -93,11 +93,11 @@ export interface HubPublicIPAddresses {
   /**
    * The list of Public IP addresses associated with azure firewall or IP addresses to be retained.
    */
-  addresses?: AzureFirewallPublicIPAddress[];
+  addresses: AzureFirewallPublicIPAddress[];
   /**
    * The number of Public IP addresses associated with azure firewall.
    */
-  count?: number;
+  count: number;
 }
 
 /**
@@ -380,11 +380,11 @@ export interface AzureFirewallSku {
   /**
    * Name of an Azure Firewall SKU. Possible values include: 'AZFW_VNet', 'AZFW_Hub'
    */
-  name?: AzureFirewallSkuName;
+  name: AzureFirewallSkuName;
   /**
    * Tier of an Azure Firewall. Possible values include: 'Standard', 'Premium'
    */
-  tier?: AzureFirewallSkuTier;
+  tier: AzureFirewallSkuTier;
 }
 
 /**
@@ -469,7 +469,7 @@ export interface AzureFirewall extends Resource {
   /**
    * The Azure Firewall Resource SKU.
    */
-  sku?: AzureFirewallSku;
+  sku: AzureFirewallSku;
   /**
    * The additional properties used to further config this azure firewall.
    */

@@ -10,6 +10,29 @@ import { ServiceClientOptions } from "@azure/ms-rest-js";
 import * as msRest from "@azure/ms-rest-js";
 
 /**
+ * Contains the possible cases for FirewallPolicyRuleCollection.
+ */
+export type FirewallPolicyRuleCollectionUnion = FirewallPolicyRuleCollection | FirewallPolicyNatRuleCollection | FirewallPolicyFilterRuleCollection;
+
+/**
+ * Properties of the rule collection.
+ */
+export interface FirewallPolicyRuleCollection {
+  /**
+   * Polymorphic Discriminator
+   */
+  ruleCollectionType: "FirewallPolicyRuleCollection";
+  /**
+   * The name of the rule collection.
+   */
+  name?: string;
+  /**
+   * Priority of the Firewall Policy Rule Collection resource.
+   */
+  priority?: number;
+}
+
+/**
  * Reference to another subresource.
  */
 export interface SubResource {
@@ -17,6 +40,41 @@ export interface SubResource {
    * Resource ID.
    */
   id?: string;
+}
+
+/**
+ * Rule Collection Group resource.
+ */
+export interface FirewallPolicyRuleCollectionGroup extends SubResource {
+  /**
+   * Priority of the Firewall Policy Rule Collection Group resource.
+   */
+  priority?: number;
+  /**
+   * Group of Firewall Policy rule collections.
+   */
+  ruleCollections?: FirewallPolicyRuleCollectionUnion[];
+  /**
+   * The provisioning state of the firewall policy rule collection group resource. Possible values
+   * include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * The name of the resource that is unique within a resource group. This name can be used to
+   * access the resource.
+   */
+  name?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+  /**
+   * Rule Group type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
 }
 
 /**
@@ -72,35 +130,35 @@ export interface FirewallPolicyIntrusionDetectionBypassTrafficSpecifications {
   /**
    * Name of the bypass traffic rule.
    */
-  name?: string;
+  name: string;
   /**
    * Description of the bypass traffic rule.
    */
-  description?: string;
+  description: string;
   /**
    * The rule bypass protocol. Possible values include: 'TCP', 'UDP', 'ICMP', 'ANY'
    */
-  protocol?: FirewallPolicyIntrusionDetectionProtocol;
+  protocol: FirewallPolicyIntrusionDetectionProtocol;
   /**
    * List of source IP addresses or ranges for this rule.
    */
-  sourceAddresses?: string[];
+  sourceAddresses: string[];
   /**
    * List of destination IP addresses or ranges for this rule.
    */
-  destinationAddresses?: string[];
+  destinationAddresses: string[];
   /**
    * List of destination ports or ranges.
    */
-  destinationPorts?: string[];
+  destinationPorts: string[];
   /**
    * List of source IpGroups for this rule.
    */
-  sourceIpGroups?: string[];
+  sourceIpGroups: string[];
   /**
    * List of destination IpGroups for this rule.
    */
-  destinationIpGroups?: string[];
+  destinationIpGroups: string[];
 }
 
 /**
@@ -124,11 +182,11 @@ export interface FirewallPolicyIntrusionDetection {
   /**
    * Intrusion detection general state. Possible values include: 'Off', 'Alert', 'Deny'
    */
-  mode?: FirewallPolicyIntrusionDetectionStateType;
+  mode: FirewallPolicyIntrusionDetectionStateType;
   /**
    * Intrusion detection configuration properties.
    */
-  configuration?: FirewallPolicyIntrusionDetectionConfiguration;
+  configuration: FirewallPolicyIntrusionDetectionConfiguration;
 }
 
 /**
@@ -139,11 +197,11 @@ export interface FirewallPolicyCertificateAuthority {
    * Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in
    * KeyVault.
    */
-  keyVaultSecretId?: string;
+  keyVaultSecretId: string;
   /**
    * Name of the CA certificate.
    */
-  name?: string;
+  name: string;
 }
 
 /**
@@ -153,7 +211,7 @@ export interface FirewallPolicyTransportSecurity {
   /**
    * The CA used for intermediate CA generation.
    */
-  certificateAuthority?: FirewallPolicyCertificateAuthority;
+  certificateAuthority: FirewallPolicyCertificateAuthority;
 }
 
 /**
@@ -239,7 +297,7 @@ export interface FirewallPolicy extends Resource {
    * List of references to FirewallPolicyRuleCollectionGroups.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly ruleCollectionGroups?: SubResource[];
+  readonly ruleCollectionGroups?: FirewallPolicyRuleCollectionGroup[];
   /**
    * The provisioning state of the firewall policy resource. Possible values include: 'Succeeded',
    * 'Updating', 'Deleting', 'Failed'
@@ -289,64 +347,6 @@ export interface FirewallPolicy extends Resource {
    * The identity of the firewall policy.
    */
   identity?: ManagedServiceIdentity;
-}
-
-/**
- * Contains the possible cases for FirewallPolicyRuleCollection.
- */
-export type FirewallPolicyRuleCollectionUnion = FirewallPolicyRuleCollection | FirewallPolicyNatRuleCollection | FirewallPolicyFilterRuleCollection;
-
-/**
- * Properties of the rule collection.
- */
-export interface FirewallPolicyRuleCollection {
-  /**
-   * Polymorphic Discriminator
-   */
-  ruleCollectionType: "FirewallPolicyRuleCollection";
-  /**
-   * The name of the rule collection.
-   */
-  name?: string;
-  /**
-   * Priority of the Firewall Policy Rule Collection resource.
-   */
-  priority?: number;
-}
-
-/**
- * Rule Collection Group resource.
- */
-export interface FirewallPolicyRuleCollectionGroup extends SubResource {
-  /**
-   * Priority of the Firewall Policy Rule Collection Group resource.
-   */
-  priority?: number;
-  /**
-   * Group of Firewall Policy rule collections.
-   */
-  ruleCollections?: FirewallPolicyRuleCollectionUnion[];
-  /**
-   * The provisioning state of the firewall policy rule collection group resource. Possible values
-   * include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * The name of the resource that is unique within a resource group. This name can be used to
-   * access the resource.
-   */
-  name?: string;
-  /**
-   * A unique read-only string that changes whenever the resource is updated.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly etag?: string;
-  /**
-   * Rule Group type.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
 }
 
 /**
@@ -477,35 +477,35 @@ export interface ApplicationRule {
   /**
    * List of source IP addresses for this rule.
    */
-  sourceAddresses?: string[];
+  sourceAddresses: string[];
   /**
    * List of destination IP addresses or Service Tags.
    */
-  destinationAddresses?: string[];
+  destinationAddresses: string[];
   /**
    * Array of Application Protocols.
    */
-  protocols?: FirewallPolicyRuleApplicationProtocol[];
+  protocols: FirewallPolicyRuleApplicationProtocol[];
   /**
    * List of FQDNs for this rule.
    */
-  targetFqdns?: string[];
+  targetFqdns: string[];
   /**
    * List of Urls for this rule condition.
    */
-  targetUrls?: string[];
+  targetUrls: string[];
   /**
    * List of FQDN Tags for this rule.
    */
-  fqdnTags?: string[];
+  fqdnTags: string[];
   /**
    * List of source IpGroups for this rule.
    */
-  sourceIpGroups?: string[];
+  sourceIpGroups: string[];
   /**
    * Terminate TLS connections for this rule.
    */
-  terminateTLS?: boolean;
+  terminateTLS: boolean;
 }
 
 /**
@@ -527,31 +527,31 @@ export interface NatRule {
   /**
    * Array of FirewallPolicyRuleNetworkProtocols.
    */
-  ipProtocols?: FirewallPolicyRuleNetworkProtocol[];
+  ipProtocols: FirewallPolicyRuleNetworkProtocol[];
   /**
    * List of source IP addresses for this rule.
    */
-  sourceAddresses?: string[];
+  sourceAddresses: string[];
   /**
    * List of destination IP addresses or Service Tags.
    */
-  destinationAddresses?: string[];
+  destinationAddresses: string[];
   /**
    * List of destination ports.
    */
-  destinationPorts?: string[];
+  destinationPorts: string[];
   /**
    * The translated address for this NAT rule.
    */
-  translatedAddress?: string;
+  translatedAddress: string;
   /**
    * The translated port for this NAT rule.
    */
-  translatedPort?: string;
+  translatedPort: string;
   /**
    * List of source IpGroups for this rule.
    */
-  sourceIpGroups?: string[];
+  sourceIpGroups: string[];
 }
 
 /**
@@ -573,31 +573,31 @@ export interface NetworkRule {
   /**
    * Array of FirewallPolicyRuleNetworkProtocols.
    */
-  ipProtocols?: FirewallPolicyRuleNetworkProtocol[];
+  ipProtocols: FirewallPolicyRuleNetworkProtocol[];
   /**
    * List of source IP addresses for this rule.
    */
-  sourceAddresses?: string[];
+  sourceAddresses: string[];
   /**
    * List of destination IP addresses or Service Tags.
    */
-  destinationAddresses?: string[];
+  destinationAddresses: string[];
   /**
    * List of destination ports.
    */
-  destinationPorts?: string[];
+  destinationPorts: string[];
   /**
    * List of source IpGroups for this rule.
    */
-  sourceIpGroups?: string[];
+  sourceIpGroups: string[];
   /**
    * List of destination IpGroups for this rule.
    */
-  destinationIpGroups?: string[];
+  destinationIpGroups: string[];
   /**
    * List of destination FQDNs.
    */
-  destinationFqdns?: string[];
+  destinationFqdns: string[];
 }
 
 /**
