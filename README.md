@@ -23,7 +23,11 @@ The structure of the directory should strictly follow these rules:
 
 1. **{RP-Name} Folders** - each RP will have a separate folder
 
-1. **'resource-manager' and 'data-plane' Folders**: the RPs can put specs in one of two categories: `resource-manager` (for ARM resources) and `data-plane` (for everything else) . The autorest configuration file (`readme.md`) for the RP should be inside this folder
+1. **'resource-manager' and 'data-plane' Folders**: the RPs can put specs in one of two categories: `resource-manager` (for ARM resources) and `data-plane` (for everything else) . The autorest configuration file (`readme.md`) for the RP should be inside this folder. If you want to generate typescript interfaces, install autorest and refer to this example: 
+
+```bash
+autorest --typescript --output-folder=libs/firewallPolicy --license-header=MICROSOFT_MIT_NO_VERSION --input-file=./specification/network/resource-manager/Microsoft.Network/stable/2020-07-01/firewallPolicy.json --package-name=firewallPolicy --generate-metadata=true --enum-types
+```
 
 1. **'preview' and 'stable' Folders**: Varying levels of stability exist in our repository. Each API Version folder should be categorized as either still accepting breaking changes, or no longer accepting breaking changes. This is not a direct analog for whether or not an API Version has the "-preview" suffix or not. SDKs that are generated from 'preview' folder items should indicate to their customers in the most idiomatic way that breaking changes may still be coming.
 
